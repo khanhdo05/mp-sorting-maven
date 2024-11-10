@@ -50,17 +50,27 @@ public class InsertionSorter<T> implements Sorter<T> {
   public void sort(T[] values) {
     // Work left to right
     for (int i = 0; i < values.length; i++) {
-      T currentValue = values[i];
-      int pointer = i - 1;
-
-      // Move values that are greater than the current value to the right
-      while (pointer >= 0 && (order.compare(values[pointer], currentValue) > 0)) {
-        values[pointer + 1] = values[pointer];
-        pointer--;
-      } // while
-
-      // Insert the current value
-      values[pointer + 1] = currentValue;
+      insert(values, i);
     } // for
   } // sort(T[])
+
+  /**
+   * Helper method to insert the smallest value to the correct position.
+   *
+   * @param values the array to sort
+   * @param i the index of the first unsorted element
+   */
+  private void insert(T[] values, int i) {
+    T currentValue = values[i];
+    int pointer = i - 1;
+
+    // Move values that are greater than the current value to the right
+    while (pointer >= 0 && (order.compare(values[pointer], currentValue) > 0)) {
+      values[pointer + 1] = values[pointer];
+      pointer--;
+    } // while
+
+    // Insert the current value
+    values[pointer + 1] = currentValue;
+  } // insert(T[], int)
 } // class InsertionSorter
