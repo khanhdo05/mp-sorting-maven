@@ -1,6 +1,5 @@
 package edu.grinnell.csc207.sorting;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -46,23 +45,29 @@ public class MergeSorter<T> implements Sorter<T> {
    * @post The array has been sorted according to some order (often one given to the constructor).
    * @post For all i, 0 &lt; i &lt; values.length, order.compare(values[i-1], values[i]) &lt;= 0
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void sort(T[] values) {
-    int n = values.length;
-
-    // base case: if the array has 0 or 1 elements, it is already sorted
-    if (n <= 1) {
-      return;
-    } // if
-
-    // recursive case
-    int mid = n / 2;
-    T[] first = Arrays.copyOfRange(values, 0, mid);
-    T[] second = Arrays.copyOfRange(values, mid, n);
-    sort(first);
-    sort(second);
-    values = merge(first, second);
+    T[] tempArray = (T[]) new Object[values.length];
+    sort(values, tempArray, 0, values.length - 1);
   } // sort(T[])
+
+  /**
+   * Helper method for sort that does the partitioning in the middle and recursively merge.
+   *
+   * @param values the array to be sorted
+   * @param tempArray the holder
+   * @param left left pointer
+   * @param right right pointer
+   */
+  private void sort(T[] values, T[] tempArray, int left, int right) {
+    if (left < right) {
+      int mid = (left + right) / 2;
+      sort(values, tempArray, left, mid);
+      sort(values, tempArray, mid + 1, right);
+      merge(values, tempArray, left, mid, right);
+    } // if
+  } // sort(T[], T[], int, int)
 
   /**
    * Merge the two sorted arrays values1 and values2 into a single sorted array.
@@ -75,40 +80,35 @@ public class MergeSorter<T> implements Sorter<T> {
    * @post the new array is sorted
    * @post values1 and values2 are unchanged
    */
-  @SuppressWarnings("unchecked")
-  private T[] merge(T[] first, T[] second) {
-    int newArrLength = first.length + second.length;
-    T[] newArr = (T[]) (new Object[newArrLength]);
-    int p1 = 0;
-    int p2 = 0;
-    int i = 0;
-    while (i < newArrLength && p1 < first.length && p2 < second.length) {
-      if (order.compare(second[p2], first[p1]) < 0) {
-        newArr[i] = second[p2];
-        p2++;
+  private void merge(T[] values, T[] tempArray, int left, int mid, int right) {
+    System.arraycopy(values, left, tempArray, left, right - left + 1);
+    int i = left;
+    int j = mid + 1;
+    int k = left;
+
+    while (i <= mid && j <= right) {
+      if (order.compare(tempArray[i], tempArray[j]) <= 0) {
+        values[k] = tempArray[i];
+        i++;
       } else {
-        newArr[i] = first[p1];
-        p1++;
+        values[k] = tempArray[j];
+        j++;
       } // if/else
+      k++;
+    } // while
+
+    // Place the remaining of the left side after we have exhaust the right side
+    while (i <= mid) {
+      values[k] = tempArray[i];
       i++;
+      k++;
     } // while
 
-    // grab any lingering items in the first array after we've
-    // exhausted the second array
-    while (p1 < first.length) {
-      newArr[i] = first[p1];
-      i += 1;
-      p1 += 1;
+    // Place the remaining of the right side after we have exhaust the left side
+    while (j <= right) {
+      values[k] = tempArray[j];
+      j++;
+      k++;
     } // while
-
-    // grab any lingering items in the second array after we've
-    // exhausted the first array
-    while (p2 < second.length) {
-      newArr[i] = second[p2];
-      i += 1;
-      p2 += 1;
-    } // while
-
-    return newArr;
   } // merge(T[], T[])
 } // class MergeSorter
