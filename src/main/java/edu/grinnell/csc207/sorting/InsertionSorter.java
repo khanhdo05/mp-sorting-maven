@@ -5,10 +5,10 @@ import java.util.Comparator;
 /**
  * Something that sorts using insertion sort.
  *
- * @param <T>
- *   The types of values that are sorted.
+ * @param <T> The types of values that are sorted.
  *
- * @author Samuel A. Rebelsky
+ * @author Khanh Do
+ * @author Samuel A. Rebelsky (Starter code)
  */
 
 public class InsertionSorter<T> implements Sorter<T> {
@@ -28,9 +28,7 @@ public class InsertionSorter<T> implements Sorter<T> {
   /**
    * Create a sorter using a particular comparator.
    *
-   * @param comparator
-   *   The order in which elements in the array should be ordered
-   *   after sorting.
+   * @param comparator The order in which elements in the array should be ordered after sorting.
    */
   public InsertionSorter(Comparator<? super T> comparator) {
     this.order = comparator;
@@ -43,18 +41,26 @@ public class InsertionSorter<T> implements Sorter<T> {
   /**
    * Sort an array in place using insertion sort.
    *
-   * @param values
-   *   an array to sort.
+   * @param values an array to sort.
    *
-   * @post
-   *   The array has been sorted according to some order (often
-   *   one given to the constructor).
-   * @post
-   *   For all i, 0 &lt; i &lt; values.length,
-   *     order.compare(values[i-1], values[i]) &lt;= 0
+   * @post The array has been sorted according to some order (often one given to the constructor).
+   * @post For all i, 0 &lt; i &lt; values.length, order.compare(values[i-1], values[i]) &lt;= 0
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    // Work left to right
+    for (int i = 0; i < values.length; i++) {
+      T currentValue = values[i];
+      int pointer = i - 1;
+
+      // Move values that are greater than the current value to the right
+      while (pointer >= 0 && (order.compare(values[pointer], currentValue) > 0)) {
+        values[pointer + 1] = values[pointer];
+        pointer--;
+      } // while
+
+      // Insert the current value
+      values[pointer + 1] = currentValue;
+    } // for
   } // sort(T[])
 } // class InsertionSorter
