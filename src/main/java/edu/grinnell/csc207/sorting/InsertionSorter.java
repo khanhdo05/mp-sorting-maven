@@ -55,7 +55,7 @@ public class InsertionSorter<T> implements Sorter<T> {
   } // sort(T[])
 
   /**
-   * Helper method to insert the smallest value to the correct position.
+   * Helper method to insert the the current element to its correct position.
    *
    * @param values the array to sort
    * @param i the index of the first unsorted element

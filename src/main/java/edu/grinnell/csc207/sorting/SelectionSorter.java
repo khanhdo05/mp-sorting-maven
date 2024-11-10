@@ -49,23 +49,32 @@ public class SelectionSorter<T> implements Sorter<T> {
   public void sort(T[] values) {
     // Work left to right
     for (int i = 0; i < values.length; i++) {
-      // Initialize: start with the first element as the smallest element
-      T smallestValue = values[i];
-      int index = i;
-
-      // Search: find the smallest value in the unsorted portion of the array
-      for (int j = i; j < values.length; j++) {
-        if (order.compare(values[j], smallestValue) < 0) {
-          smallestValue = values[j];
-          index = j;
-        } // if
-      } // for
-
-      // Swap: swap the smallest value with the first element in the unsorted portion
-      values[index] = values[i];
-      values[i] = smallestValue;
+      select(values, i);
     } // for
   } // sort(T[])
 
-  
+  /**
+   * Helper method to find the smallest value in the unsorted portion to swap with the first element
+   * in the unsorted portion.
+   * 
+   * @param values
+   * @param i
+   */
+  private void select(T[] values, int i) {
+    // Initialize: start with the first element as the smallest element
+    T smallestValue = values[i];
+    int index = i;
+
+    // Search: find the smallest value in the unsorted portion of the array
+    for (int j = i; j < values.length; j++) {
+      if (order.compare(values[j], smallestValue) < 0) {
+        smallestValue = values[j];
+        index = j;
+      } // if
+    } // for
+
+    // Swap: swap the smallest value with the first element in the unsorted portion
+    values[index] = values[i];
+    values[i] = smallestValue;
+  } // select(T[], int)
 } // class SelectionSorter
