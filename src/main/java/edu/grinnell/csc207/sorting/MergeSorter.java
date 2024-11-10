@@ -53,8 +53,8 @@ public class MergeSorter<T> implements Sorter<T> {
   } // sort(T[])
 
   /**
-   * Helper method for sort that does the partitioning in the middle and recursively merge.
-   *
+   * Helper method that recursively split array into 2 halves, sort each half, and then merge them.
+   * 
    * @param values the array to be sorted
    * @param tempArray the holder
    * @param left left pointer
@@ -70,18 +70,21 @@ public class MergeSorter<T> implements Sorter<T> {
   } // sort(T[], T[], int, int)
 
   /**
-   * Merge the two sorted arrays values1 and values2 into a single sorted array.
+   * Helper method that merges two sorted subarrays into a single sorted subarray.
    *
-   * @param first the first sorted array
-   * @param second the second sorted array
+   * @param values the array containing the subarrays to be merged
+   * @param tempArray a temporary array used for merging
+   * @param left the starting index of the first subarray
+   * @param mid the ending index of the first subarray
+   * @param right the ending index of the second subarray
    * @return a new array that contains all the values from values1 and values2, in order
-   * @pre values1 is sorted
-   * @pre values2 is sorted
-   * @post the new array is sorted
-   * @post values1 and values2 are unchanged
+   * @pre The subarray from values[left] to values[mid] is sorted
+   * @pre The subarray from values[mid+1] to values[right] is sorted
+   * @post The subarray from values[left] to values[right] is sorted
    */
   private void merge(T[] values, T[] tempArray, int left, int mid, int right) {
     System.arraycopy(values, left, tempArray, left, right - left + 1);
+
     int i = left;
     int j = mid + 1;
     int k = left;
