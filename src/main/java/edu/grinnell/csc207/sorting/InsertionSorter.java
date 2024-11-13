@@ -10,7 +10,6 @@ import java.util.Comparator;
  * @author Khanh Do
  * @author Samuel A. Rebelsky (Starter code)
  */
-
 public class InsertionSorter<T> implements Sorter<T> {
   // +--------+------------------------------------------------------
   // | Fields |

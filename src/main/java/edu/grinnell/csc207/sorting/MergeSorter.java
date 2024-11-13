@@ -7,9 +7,9 @@ import java.util.Comparator;
  *
  * @param <T> The types of values that are sorted.
  *
+ * @author Khanh Do
  * @author Samuel A. Rebelsky
  */
-
 public class MergeSorter<T> implements Sorter<T> {
   // +--------+------------------------------------------------------
   // | Fields |
@@ -54,7 +54,7 @@ public class MergeSorter<T> implements Sorter<T> {
 
   /**
    * Helper method that recursively split array into 2 halves, sort each half, and then merge them.
-   * 
+   *
    * @param values the array to be sorted
    * @param tempArray the holder
    * @param lb lb pointer
@@ -77,7 +77,6 @@ public class MergeSorter<T> implements Sorter<T> {
    * @param lb the starting index of the first subarray
    * @param mid the ending index of the first subarray
    * @param ub the ending index of the second subarray
-   * @return a new array that contains all the values from values1 and values2, in order
    * @pre The subarray from values[lb] to values[mid] is sorted
    * @pre The subarray from values[mid+1] to values[ub] is sorted
    * @post The subarray from values[lb] to values[ub] is sorted

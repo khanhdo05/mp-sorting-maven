@@ -7,9 +7,9 @@ import java.util.Comparator;
  *
  * @param <T> The types of values that are sorted.
  *
+ * @author Khanh Do
  * @author Samuel A. Rebelsky
  */
-
 public class SelectionSorter<T> implements Sorter<T> {
   // +--------+------------------------------------------------------
   // | Fields |
@@ -56,7 +56,7 @@ public class SelectionSorter<T> implements Sorter<T> {
   /**
    * Helper method to find the smallest value in the unsorted portion to swap with the first element
    * in the unsorted portion.
-   * 
+   *
    * @param values
    * @param i
    */
