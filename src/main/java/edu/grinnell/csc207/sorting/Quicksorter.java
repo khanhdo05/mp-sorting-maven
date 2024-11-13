@@ -54,62 +54,62 @@ public class Quicksorter<T> implements Sorter<T> {
    * Helper method that recursively parition an array into 2 halves and sort each subarray.
    *
    * @param values the array to be sorted
-   * @param left the starting index
-   * @param right the ending index
+   * @param lb the starting index
+   * @param ub the ending index
    */
-  private void sort(T[] values, int left, int right) {
+  private void sort(T[] values, int lb, int ub) {
     // base case:
-    if (left >= right) {
+    if (lb >= ub) {
       return;
     } // if
 
     // divide the array into smaller subarrays
-    int pivotIndex = partition(values, left, right);
+    int pivotIndex = partition(values, lb, ub);
 
     // recursively sort each subarray
-    sort(values, left, pivotIndex - 1);
-    sort(values, pivotIndex + 1, right);
+    sort(values, lb, pivotIndex - 1);
+    sort(values, pivotIndex + 1, ub);
   } // sort(T[], int, int)
 
   /**
    * Helper method to choose a pivot and sort accordingly.
    *
    * @param values the array to be sorted
-   * @param left the starting index of the to be sorted array
-   * @param right the ending index of the to be sorted array
+   * @param lb the starting index of the to be sorted array
+   * @param ub the ending index of the to be sorted array
    * @return the index of the element that separates the array into a smaller value subarray and
    *         larger value subarray
    */
-  private int partition(T[] values, int left, int right) {
+  private int partition(T[] values, int lb, int ub) {
     // choose a pivot
-    T pivot = values[right];
-    int leftIndex = left;
-    int rightIndex = right;
+    T pivot = values[ub];
+    int lbIndex = lb;
+    int ubIndex = ub;
 
-    while (leftIndex <= rightIndex) {
+    while (lbIndex <= ubIndex) {
       // walk until we find something on the left side that belongs to the right side (less than the
       // pivot)
-      while (leftIndex <= right && (order.compare(values[leftIndex], pivot) < 0)) {
-        leftIndex += 1;
+      while (lbIndex <= ub && (order.compare(values[lbIndex], pivot) < 0)) {
+        lbIndex += 1;
       } // while
 
       // walk until we find something on the right side that belongs to the left side (>= pivot)
-      while (rightIndex >= left && (order.compare(values[rightIndex], pivot) >= 0)) {
-        rightIndex -= 1;
+      while (ubIndex >= lb && (order.compare(values[ubIndex], pivot) >= 0)) {
+        ubIndex -= 1;
       } // while
 
-      T temp = values[leftIndex];
+      T temp = values[lbIndex];
 
       // swap
-      if (leftIndex < rightIndex) {
-        values[leftIndex] = values[rightIndex];
-        values[rightIndex] = temp;
+      if (lbIndex < ubIndex) {
+        values[lbIndex] = values[ubIndex];
+        values[ubIndex] = temp;
       } else {
-        values[leftIndex] = values[right];
-        values[right] = temp;
+        values[lbIndex] = values[ub];
+        values[ub] = temp;
       } // if/else
     } // while
 
-    return leftIndex;
+    return lbIndex;
   } // partition(T[], int, int)
 } // class Quicksorter
