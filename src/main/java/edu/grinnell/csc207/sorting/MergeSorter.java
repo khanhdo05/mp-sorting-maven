@@ -57,15 +57,15 @@ public class MergeSorter<T> implements Sorter<T> {
    * 
    * @param values the array to be sorted
    * @param tempArray the holder
-   * @param left left pointer
-   * @param right right pointer
+   * @param lb lb pointer
+   * @param ub right pointer
    */
-  private void sort(T[] values, T[] tempArray, int left, int right) {
-    if (left < right) {
-      int mid = (left + right) / 2;
-      sort(values, tempArray, left, mid);
-      sort(values, tempArray, mid + 1, right);
-      merge(values, tempArray, left, mid, right);
+  private void sort(T[] values, T[] tempArray, int lb, int ub) {
+    if (lb < ub) {
+      int mid = lb + (ub - lb) / 2;
+      sort(values, tempArray, lb, mid);
+      sort(values, tempArray, mid + 1, ub);
+      merge(values, tempArray, lb, mid, ub);
     } // if
   } // sort(T[], T[], int, int)
 
@@ -74,22 +74,22 @@ public class MergeSorter<T> implements Sorter<T> {
    *
    * @param values the array containing the subarrays to be merged
    * @param tempArray a temporary array used for merging
-   * @param left the starting index of the first subarray
+   * @param lb the starting index of the first subarray
    * @param mid the ending index of the first subarray
-   * @param right the ending index of the second subarray
+   * @param ub the ending index of the second subarray
    * @return a new array that contains all the values from values1 and values2, in order
-   * @pre The subarray from values[left] to values[mid] is sorted
-   * @pre The subarray from values[mid+1] to values[right] is sorted
-   * @post The subarray from values[left] to values[right] is sorted
+   * @pre The subarray from values[lb] to values[mid] is sorted
+   * @pre The subarray from values[mid+1] to values[ub] is sorted
+   * @post The subarray from values[lb] to values[ub] is sorted
    */
-  private void merge(T[] values, T[] tempArray, int left, int mid, int right) {
-    System.arraycopy(values, left, tempArray, left, right - left + 1);
+  private void merge(T[] values, T[] tempArray, int lb, int mid, int ub) {
+    System.arraycopy(values, lb, tempArray, lb, ub - lb + 1);
 
-    int i = left;
+    int i = lb;
     int j = mid + 1;
-    int k = left;
+    int k = lb;
 
-    while (i <= mid && j <= right) {
+    while (i <= mid && j <= ub) {
       if (order.compare(tempArray[i], tempArray[j]) <= 0) {
         values[k] = tempArray[i];
         i++;
@@ -108,7 +108,7 @@ public class MergeSorter<T> implements Sorter<T> {
     } // while
 
     // Place the remaining of the right side after we have exhaust the left side
-    while (j <= right) {
+    while (j <= ub) {
       values[k] = tempArray[j];
       j++;
       k++;
