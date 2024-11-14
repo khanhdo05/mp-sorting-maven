@@ -84,33 +84,24 @@ public class MergeSorter<T> implements Sorter<T> {
   private void merge(T[] values, T[] tempArray, int lb, int mid, int ub) {
     System.arraycopy(values, lb, tempArray, lb, ub - lb + 1);
 
-    int i = lb;
-    int j = mid + 1;
-    int k = lb;
+    int i = lb, j = mid + 1, k = lb;
 
     while (i <= mid && j <= ub) {
       if (order.compare(tempArray[i], tempArray[j]) <= 0) {
-        values[k] = tempArray[i];
-        i++;
+        values[k++] = tempArray[i++];
       } else {
-        values[k] = tempArray[j];
-        j++;
+        values[k++] = tempArray[j++];
       } // if/else
-      k++;
     } // while
 
     // Place the remaining of the left side after we have exhaust the right side
     while (i <= mid) {
-      values[k] = tempArray[i];
-      i++;
-      k++;
+      values[k++] = tempArray[i++];
     } // while
 
     // Place the remaining of the right side after we have exhaust the left side
     while (j <= ub) {
-      values[k] = tempArray[j];
-      j++;
-      k++;
+      values[k++] = tempArray[j++];
     } // while
   } // merge(T[], T[])
 } // class MergeSorter

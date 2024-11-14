@@ -1,15 +1,13 @@
 package edu.grinnell.csc207.main;
 
-import edu.grinnell.csc207.sorting.Sorter;
-import edu.grinnell.csc207.util.SimpleTimer;
-
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-import java.io.PrintWriter;
-
-import java.lang.reflect.Constructor;
+import edu.grinnell.csc207.sorting.Sorter;
+import edu.grinnell.csc207.util.SimpleTimer;
 
 /**
  * Tools for exploring sorting implementations.
@@ -159,7 +157,7 @@ public class SortTools {
 
     // Array of identical values.
     int size = 70;
-    // if (pen != null) { pen.println("  Sorting identical array."); } 
+    // if (pen != null) { pen.println("  Sorting identical array."); }
     strings = new String[size];
     for (int i = 0; i < 70; i++) {
       strings[i] = "eh";
