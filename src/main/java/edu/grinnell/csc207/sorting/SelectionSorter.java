@@ -61,20 +61,37 @@ public class SelectionSorter<T> implements Sorter<T> {
    * @param i
    */
   private void select(T[] values, int i) {
-    // Initialize: start with the first element as the smallest element
-    T smallestValue = values[i];
-    int index = i;
+      int smallestIndex = indexOfSmallest(values, i);
+      swap(values, i, smallestIndex);
+  } // select(T[], int)
 
-    // Search: find the smallest value in the unsorted portion of the array
-    for (int j = i; j < values.length; j++) {
-      if (order.compare(values[j], smallestValue) < 0) {
-        smallestValue = values[j];
-        index = j;
+  /**
+   * Finds the index of the smallest element in the unsorted portion of the array.
+   *
+   * @param values The array being sorted.
+   * @param start The starting index for the unsorted portion.
+   * @return The index of the smallest element in the unsorted portion.
+   */
+  private int indexOfSmallest(T[] values, int start) {
+    int smallestIndex = start;
+    for (int j = start + 1; j < values.length; j++) {
+      if (order.compare(values[j], values[smallestIndex]) < 0) {
+        smallestIndex = j;
       } // if
     } // for
+    return smallestIndex;
+  } // indexOfSmallest(T[], int)
 
-    // Swap: swap the smallest value with the first element in the unsorted portion
-    values[index] = values[i];
-    values[i] = smallestValue;
-  } // select(T[], int)
+  /**
+   * Swaps two elements in an array.
+   *
+   * @param values The array.
+   * @param i The index of the first element.
+   * @param j The index of the second element.
+   */
+  private void swap(T[] values, int i, int j) {
+    T temp = values[i];
+    values[i] = values[j];
+    values[j] = temp;
+  } // swap(T[], int, int)
 } // class SelectionSorter
